@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Editar Mascota</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="form-container">
+      <h1>✏️ Editar Mascota</h1>
+      <form action="editar_mascota.php" method="POST">
+        <!-- Puedes ocultar el chip si no se permite cambiar -->
+        <input type="hidden" name="chip" value="123456789" />
+
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" name="nombre" value="Toby" required />
+
+        <label for="sexo">Sexo</label>
+        <select id="sexo" name="sexo" required>
+          <option value="M">Macho</option>
+          <option value="H">Hembra</option>
+        </select>
+
+        <label for="fecha_nacimiento">Fecha de nacimiento</label>
+        <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" value="2020-05-01" required />
+
+        <label for="peso">Peso (kg)</label>
+        <input type="number" id="peso" name="peso" step="0.1" value="12.5" required />
+
+        <label for="vacunado">¿Vacunado?</label>
+        <select id="vacunado" name="vacunado" required>
+          <option value="1">Sí</option>
+          <option value="0">No</option>
+        </select>
+
+        <label for="id_especie">ID de Especie</label>
+        <input type="number" id="id_especie" name="id_especie" value="1" required />
+
+        <label for="id_propietario">ID de Propietario</label>
+        <input type="number" id="id_propietario" name="id_propietario" value="10" required />
+
+        <button type="submit">Guardar cambios</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

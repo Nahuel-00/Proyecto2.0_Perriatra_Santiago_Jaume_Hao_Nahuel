@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registrar Animal - Patitas Felices</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <script src="../css/valCompleta.js" defer></script>
+  <style>
+    .error {
+      color: red;
+      font-size: 0.8em;
+    }
+    </style>
+</head>
+<body>
+  <div class="container">
+    <div class="form-container">
+      <h1>📋 Registrar Animal</h1>
+      <form action="registrar_animal.php" method="POST">
+        <label for="chip">Nº de Chip</label>
+        <input type="text" id="chip" name="chip" onblur="verifChip()" required> <br>
+        <p class= "error" id="errorChip"></p>
+
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombreMascota" name="nombre" onblur="verifNombreMascota()" required> <br>
+        <p class= "error" id="errorUsuarioMascota"></p>
+
+        <label for="sexo">Sexo</label>
+        <select id="sexo" name="sexo" onblur="verifSexo()" required>
+          <option value="">Selecciona</option>
+          <option value="M">Macho</option>
+          <option value="H">Hembra</option>
+        </select> <br>
+        <p class= "error" id="errorSexo"></p>
+
+        <label for="fecha_nacimiento">Fecha de nacimiento</label>
+        <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" onblur="verifFecha()" required> <br>
+        <p class= "error" id="errorFecha"></p>
+
+        <label for="peso">Peso (kg)</label>
+        <input type="number" id="peso" name="peso" step="0.1" onblur="verifPeso()" required> <br>
+        <p class= "error" id="errorPeso"></p>
+
+        <label for="vacunado">¿Vacunado?</label>
+        <select id="vacunado" name="vacunado" onblur="verifVacunado()" required>
+          <option value="">Selecciona</option>
+          <option value="1">Sí</option>
+          <option value="0">No</option>
+        </select> <br>
+        <p class= "error" id="errorVacunado"></p>
+
+        <label for="id_especie">ID de Especie</label>
+        <input type="number" id="id_especie" name="id_especie" onblur="verifIdEspecie()" required> <br>
+        <p class= "error" id="errorIdEspecie"></p>
+
+        <label for="id_propietario">ID de Propietario</label>
+        <input type="number" id="id_propietario" name="id_propietario" onblur="verifIdPropietario()" required> <br>
+        <p class= "error" id="errorIdPropietario"></p> 
+
+        <button type="submit">Registrar Animal</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

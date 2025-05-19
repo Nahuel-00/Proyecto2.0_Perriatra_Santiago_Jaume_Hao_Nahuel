@@ -1,0 +1,123 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  body {
+    background-image: url(../img/fond_index.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  
+  .container {
+    background-color: #fff8e7;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    width: 90%;
+    max-width: 400px;
+    padding: 30px;
+  }
+  
+  .form-container h1 {
+    text-align: center;
+    color: #f57c00;
+    margin-bottom: 20px;
+  }
+  
+  .tabs {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+  }
+  
+  .tab-btn {
+    padding: 10px 20px;
+    border: none;
+    background-color: #ffcc80;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .tab-btn.active,
+  .tab-btn:hover {
+    background-color: #ffa726;
+    color: white;
+  }
+  
+  .form {
+    display: none;
+    flex-direction: column;
+  }
+  
+  .form.active {
+    display: flex;
+  }
+  
+  label {
+    margin-top: 10px;
+    color: #5d4037;
+  }
+  
+  input {
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+  }
+  
+  button[type="submit"] {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f57c00;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button[type="submit"]:hover {
+    background-color:#ef6c00; 
+  }
+  
+  
+  .link a {
+    color: #ef6c00; 
+    text-decoration: none;
+  }
+  
+  .link a:hover {
+    text-decoration: none;
+  }
+  
+  .link a:focus {
+    outline: none;
+  }
+  
+  
+  
+  .navbar{
+    margin-top: 2%;
+    margin-left: 20%;
+    margin-right: 20%;
+    border-radius: 10px;
+    background-color: #95fda894;
+    border: 1px solid black;
+  }
+  
+  
+  #nav_inicio{
+  
+    display: flex;
+  
+    
+  
+  }
+  
+  #inicio_1{
+    padding-left: 5%;
+  }
+  #inicio_2{
+    padding-left: 5%;
+  }

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registrar Propietario - Patitas Felices</title>
+<link rel="stylesheet" href="../css/styles.css">
+<script src="../css/valCompleta.js" defer></script>
+  <style>
+    .error {
+      color: red;
+      font-size: 0.8em;
+    }
+    </style>
+</head>
+<body>
+  <div class="container">
+    <div class="form-container">
+      <h1>👤 Registrar Propietario</h1>
+      <form action="registrar_propietario.php" method="POST">
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombrePropietario" name="nombre" onblur="verifNombrePropietario()" required /> <br>
+        <p class= "error" id="errorUsuarioPropietario"></p>
+
+        <label for="apellidos">Apellido</label>
+        <input type="text" id="apellidoPropietario1" name="apellidos" onblur="verifApellidoPropietario1()" required /> <br>
+        <p class= "error" id="errorApellidoPropietario1"></p>
+
+        <label for="apellidos">Apellido2</label>
+        <input type="text" id="apellidoPropietario2" name="apellidos" onblur="verifApellidoPropietario2()" required /> <br>
+        <p class= "error" id="errorApellidoPropietario2"></p>
+
+        <label for="telefono">Teléfono</label>
+        <input type="tel" id="telefono" name="telefono" onblur="verifTelefonoPropietario()" required pattern="[0-9]{9}" placeholder="123456789"/> <br>
+        <p class= "error" id="errorTelefono"></p>
+
+        <label for="correo">Correo electrónico</label>
+        <input type="email" id="correoPropietario" name="correo" onblur="verifEmailPropietario()" required /> <br>
+        <p class= "error" id="errorEmailPropietario"></p>
+
+        <label for="direccion">Dirección</label>
+        <input type="text" id="direccion" name="direccion" onblur="verifDireccionPropietario()" required /> <br>
+        <p class= "error" id="errorDireccion"></p>
+
+        <button type="submit">Registrar Propietario</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

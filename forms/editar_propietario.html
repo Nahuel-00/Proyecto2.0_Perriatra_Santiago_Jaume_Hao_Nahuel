@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Editar Propietario</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="form-container">
+      <h1>✏️ Editar Propietario</h1>
+      <form action="editar_propietario.php" method="POST">
+        <input type="hidden" name="id_propietario" value="10" />
+
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" name="nombre" value="Laura" required />
+
+        <label for="apellidos">Apellidos</label>
+        <input type="text" id="apellidos" name="apellidos" value="González Pérez" required />
+
+        <label for="telefono">Teléfono</label>
+        <input type="tel" id="telefono" name="telefono" value="612345678" required />
+
+        <label for="correo">Correo electrónico</label>
+        <input type="email" id="correo" name="correo" value="laura@mail.com" required />
+
+        <label for="direccion">Dirección</label>
+        <input type="text" id="direccion" name="direccion" value="Calle Patitas, 23" required />
+
+        <button type="submit">Guardar cambios</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
