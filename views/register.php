@@ -6,12 +6,7 @@
   <title>Registrar Veterinario - Patitas Felices</title>
   <link rel="stylesheet" href="../css/styles.css">
   <script src="../css/valCompleta.js" defer></script>
-  <style>
-    .error {
-      color: red;
-      font-size: 0.8em;
-    }
-  </style>
+  
 </head>
 <body>
   <div class="container">
@@ -47,8 +42,12 @@
         <input type="date" id="fechaContratacion" name="fecha_contratacion" onblur="verifFechaContratacion()" required />
         <br><p class="error" id="errorFechaContratacion"></p>
 
+        <label for="sueldo">Sueldo</label> 
+        <input type="number" id="sueldo" name="sueldo" required onblur="veriSueldo()" /><br>
+        <p class= "error" id="errorSueldo"></p>
+
         <label for="activo">¿Activo?</label>
-        <select id="activo" name="activo" required>
+        <select id="activo" name="activo" onblur="veriActivo()" required>
           <option value="">-- Selecciona una opción --</option>
           <option value="1">Sí</option>
           <option value="0">No</option>

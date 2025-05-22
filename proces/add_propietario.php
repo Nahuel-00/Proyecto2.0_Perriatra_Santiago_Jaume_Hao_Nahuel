@@ -1,6 +1,15 @@
 <?php
-include '../services/database.php';
 session_start();
+include '../services/database.php';
+
+// Comprobamos si hay sesión iniciada
+if (!isset($_SESSION['nombre_veterinario'])) {
+    header("Location: ../views/login.php");
+    exit();
+}
+
+// Guardamos el nombre en una variable local
+$usuario = $_SESSION['nombre_veterinario'];
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $dni = $_POST['dni_propietario'];

@@ -1,33 +1,51 @@
 <?php
+session_start();
+// Comprobamos si hay sesión iniciada
+if (!isset($_SESSION['nombre_veterinario'])) {
+    header("Location: ./views/login.php");
+    exit();
+}
+
+// Guardamos el nombre en una variable local
+$usuario = $_SESSION['nombre_veterinario'];
+
 $conexion = mysqli_connect("localhost", "root", "", "db_perriatra");
 
 if (!$conexion) {
     die("Error de conexión: " . mysqli_connect_error());
 }
 
-// session_start();
 
-// if (!isset($_SESSION['usuario'])) {
-//     header("Location: ./views/login.html");
-//     exit();
-// }
-// $usuario = $_SESSION['usuario'];
+$conexion = mysqli_connect("localhost", "root", "", "db_perriatra");
 
+if (!$conexion) {
+    die("Error de conexión: " . mysqli_connect_error());
+}
 
-$sql = "SELECT 
-            p.dni_propietario, 
-            p.nombre_propietario, 
-            p.apellido_primario_propietario, 
-            p.apellido_secundario_propietario,
-            a.chip, 
-            a.nombre AS nombre_mascota, 
-            a.sexo, 
-            a.fecha_nacimiento, 
-            a.peso, 
-            a.vacunado
+// Obtener filtros desde GET
+$filtro_especie = isset($_GET['id_especie']) ? $_GET['id_especie'] : '';
+$filtro_veterinario = isset($_GET['dni_veterinario']) ? $_GET['dni_veterinario'] : '';
+$filtro_propietario = isset($_GET['dni_propietario']) ? $_GET['dni_propietario'] : '';
+
+// Consulta con filtros sumativos
+$sql = "SELECT p.dni_propietario, p.nombre_propietario, p.apellido_primario_propietario, p.apellido_secundario_propietario, a.chip, a.nombre AS nombre_mascota, a.sexo, a.fecha_nacimiento, a.peso, a.vacunado
         FROM tbl_propietario p
         LEFT JOIN tbl_animal a ON p.dni_propietario = a.dni_propietario
-        ORDER BY p.apellido_primario_propietario, p.apellido_secundario_propietario, p.nombre_propietario";
+        WHERE 1";
+
+if (!empty($filtro_especie)) {
+    $sql .= " AND a.id_especie = '" . $filtro_especie . "'";
+}
+
+if (!empty($filtro_veterinario)) {
+    $sql .= " AND a.dni_veterinario = '" . $filtro_veterinario . "'";
+}
+
+if (!empty($filtro_propietario)) {
+    $sql .= " AND a.dni_propietario = '" . $filtro_propietario . "'";
+}
+
+$sql .= " ORDER BY p.apellido_primario_propietario, p.apellido_secundario_propietario, p.nombre_propietario";
 
 $resultado = mysqli_query($conexion, $sql);
 ?>
@@ -44,6 +62,7 @@ $resultado = mysqli_query($conexion, $sql);
             color: #333;
             margin: 0;
             padding: 0;
+            background-image: url(./img/fondo_index.jpg);
         }
         header {
             background-color: #ff7f00;
@@ -54,12 +73,21 @@ $resultado = mysqli_query($conexion, $sql);
         nav {
             background-color: #ffb366;
             padding: 10px;
-            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        nav a {
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+        .nav-links a {
             color: white;
-            margin: 0 15px;
             text-decoration: none;
+            font-weight: bold;
+        }
+        .usuario-sesion {
+            color: white;
             font-weight: bold;
         }
         .container {
@@ -67,11 +95,7 @@ $resultado = mysqli_query($conexion, $sql);
             margin: 20px auto;
         }
         h1 {
-            color: #ff7f00;
-        }
-        .bienvenida {
-            margin-bottom: 20px;
-            font-size: 18px;
+            color: #fff;
         }
         .boton-anadir {
             background-color: #28a745;
@@ -113,23 +137,84 @@ $resultado = mysqli_query($conexion, $sql);
         .borrar {
             background-color: #dc3545;
         }
+        .filters-container {
+            margin-bottom: 20px;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .filters-container label,
+        .filters-container select {
+            margin-right: 15px;
+        }
+        .cerrar{
+            background-color: red;
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>Clínica Veterinaria PerriAtra</h1>
+    <h1>Clínica Veterinaria Perriatra</h1>
 </header>
 
 <nav>
-    <a href="./views/propietario.php">Propietarios</a>
-    <a href="./views/mascota.php">Mascotas</a>
-    <a href="./views/mostrar_medicamento.php">Medicamentos</a>
-    <a href="./proces/logout.php">Cerrar sesión</a>
+    <div class="nav-links">
+        <a href="./views/propietario.php">Propietarios</a>
+        <a href="./views/mascota.php">Mascotas</a>
+        <a href="./views/mostrar_medicamento.php">Medicamentos</a>
+        <a href="./proces/logout.php" c="cerrar">Cerrar sesión</a>
+    </div>
+    <div class="usuario-sesion">
+        Bienvenido, <?php echo htmlspecialchars($usuario); ?>
+    </div>
 </nav>
 
 <div class="container">
- 
+
+    <div class="filters-container">
+        <form method="get" action="index.php">
+            <label for="id_especie">Especie:</label>
+            <select name="id_especie" id="id_especie">
+                <option value="">Todas</option>
+                <?php
+                $res_especie = mysqli_query($conexion, "SELECT id_especie, nombre_especie FROM tbl_especie");
+                while ($row = mysqli_fetch_assoc($res_especie)) {
+                    $selected = ($filtro_especie == $row['id_especie']) ? 'selected' : '';
+                    echo "<option value='{$row['id_especie']}' $selected>{$row['nombre_especie']}</option>";
+                }
+                ?>
+            </select>
+
+            <label for="dni_veterinario">Veterinario:</label>
+            <select name="dni_veterinario" id="dni_veterinario">
+                <option value="">Todos</option>
+                <?php
+                $res_vet = mysqli_query($conexion, "SELECT dni_veterinario, nombre_veterinario FROM tbl_veterinario");
+                while ($row = mysqli_fetch_assoc($res_vet)) {
+                    $selected = ($filtro_veterinario == $row['dni_veterinario']) ? 'selected' : '';
+                    echo "<option value='{$row['dni_veterinario']}' $selected>{$row['nombre_veterinario']}</option>";
+                }
+                ?>
+            </select>
+
+            <label for="dni_propietario">Propietario:</label>
+            <select name="dni_propietario" id="dni_propietario">
+                <option value="">Todos</option>
+                <?php
+                $res_pro = mysqli_query($conexion, "SELECT dni_propietario, nombre_propietario FROM tbl_propietario");
+                while ($row = mysqli_fetch_assoc($res_pro)) {
+                    $selected = ($filtro_propietario == $row['dni_propietario']) ? 'selected' : '';
+                    echo "<option value='{$row['dni_propietario']}' $selected>{$row['nombre_propietario']}</option>";
+                }
+                ?>
+            </select>
+
+            <button type="submit">Filtrar</button>
+        </form>
+    </div>
+
     <table>
         <tr>
             <th>DNI Propietario</th>
@@ -141,7 +226,6 @@ $resultado = mysqli_query($conexion, $sql);
             <th>Fecha Nacimiento</th>
             <th>Peso (kg)</th>
             <th>Vacunado</th>
-
         </tr>
         <?php
         while ($fila = mysqli_fetch_assoc($resultado)) {
@@ -155,12 +239,11 @@ $resultado = mysqli_query($conexion, $sql);
             echo "<td>" . ($fila["fecha_nacimiento"] ?? "—") . "</td>";
             echo "<td>" . ($fila["peso"] ?? "—") . "</td>";
             echo "<td>" . (isset($fila["vacunado"]) ? ($fila["vacunado"] ? "Sí" : "No") : "—") . "</td>";
-            echo "<td class='acciones'>";
-            echo "</td>";
             echo "</tr>";
         }
         ?>
-        
+    </table>
+
 </div>
 
 </body>

@@ -1,6 +1,22 @@
 <?php
 // Conexión BBDD
 include "../services/database.php";
+session_start();
+
+// Comprobamos si hay sesión iniciada
+if (!isset($_SESSION['nombre_veterinario'])) {
+    header("Location: ../views/login.php");
+    exit();
+}
+
+// Guardamos el nombre en una variable local
+$usuario = $_SESSION['nombre_veterinario'];
+
+$conexion = mysqli_connect("localhost", "root", "", "db_perriatra");
+
+if (!$conexion) {
+    die("Error de conexión: " . mysqli_connect_error());
+}
 ?>
 
 <!DOCTYPE html>
@@ -11,12 +27,6 @@ include "../services/database.php";
   <title>Registrar Propietario - Patitas Felices</title>
   <link rel="stylesheet" href="../css/styles.css">
   <script src="../css/valCompleta.js" defer></script>
-  <style>
-    .error {
-      color: red;
-      font-size: 0.8em;
-    }
-  </style>
 </head>
 <body>
   <div class="container">

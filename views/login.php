@@ -6,12 +6,6 @@
   <title>Veterinaria Patitas Felices - Login / Registro</title>
   <link rel="stylesheet" href="../css/styles.css" />
   <script src="../css/valCompleta.js" defer></script>
-    <style>
-    .error {
-      color: red;
-      font-size: 0.8em;
-    }
-    </style>
 </head>
 <body>
   <div class="container">
@@ -28,9 +22,10 @@
       <p class="error" id="errorContra"></p>
 
       <button type="submit">Entrar</button>
+       <p class="link"> <a href="../views/register.php">Si no tienes cuenta crea una aquí</a></p>
     </form>
     </div>
-    <p class="link"> Si no tienes cuenta crea una  <a href="../views/register.php">aquí</a></p>
+    
       
   </div>
 

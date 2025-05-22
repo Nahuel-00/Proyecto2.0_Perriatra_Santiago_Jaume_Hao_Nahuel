@@ -1,6 +1,15 @@
 <?php
-include '../services/database.php';
+session_start();
+include "../services/database.php";
 
+// Comprobamos si hay sesión iniciada
+if (!isset($_SESSION['nombre_veterinario'])) {
+    header("Location: ./login.php");
+    exit();
+}
+
+// Guardamos el nombre en una variable local
+$usuario = $_SESSION['nombre_veterinario'];
 
 // Consulta con LEFT JOIN para que no falle si faltan relaciones
 $sql = "SELECT a.chip, a.nombre AS nombre_mascota, a.sexo, a.fecha_nacimiento, a.peso, a.vacunado, e.nombre_especie, CONCAT(p.nombre_propietario, ' ', p.apellido_primario_propietario) AS propietario, CONCAT(v.nombre_veterinario, ' ', v.apellido_primario_veterinario) AS veterinario
@@ -23,68 +32,17 @@ if (!$resultado) {
     <meta charset="UTF-8">
     <title>Listado de Mascotas</title>
     <link rel="stylesheet" href="../css/styles.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #fff8f0;
-            padding: 20px;
-        }
-        h2 {
-            text-align: center;
-            color: #d35400;
-        }
-        .boton-anadir {
-            display: inline-block;
-            margin: 10px 5px;
-            padding: 10px 20px;
-            background-color: #e67e22;
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: bold;
-        }
-        .boton-anadir:hover {
-            background-color: #ca6f1e;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        th, td {
-            border: 1px solid #eee;
-            padding: 12px;
-            text-align: center;
-        }
-        th {
-            background-color: #ffa559;
-            color: white;
-        }
-        tr:hover {
-            background-color: #f9e1d6;
-        }
-        .editar {
-            background-color: #27ae60;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 4px;
-        }
-        .editar:hover {
-            background-color: #1e8449;
-        }
-        .borrar {
-            background-color: #c0392b;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 4px;
-        }
-        .borrar:hover {
-            background-color: #922b21;
-        }
-    </style>
+    
 </head>
 <body>
+
+<nav>
+    <a href="../index.php">Inicio</a>
+    <a href="../views/propietario.php">Propietarios</a>
+    <a href="../views/mascota.php">Mascotas</a>
+    <a href="../views/mostrar_medicamento.php">Medicamentos</a>
+    <a href="../proces/logout.php">Cerrar sesión</a>
+</nav>
 
     <h2>Listado de Mascotas</h2>
     <a href='../forms/form_mascota.php' class='boton-anadir'>➕ Añadir Mascota</a>

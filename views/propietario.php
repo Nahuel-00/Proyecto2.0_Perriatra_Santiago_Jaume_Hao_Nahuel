@@ -1,6 +1,16 @@
 
 <?php
+session_start();
 include '../services/database.php';
+
+// Comprobamos si hay sesión iniciada
+if (!isset($_SESSION['nombre_veterinario'])) {
+    header("Location: ./login.php");
+    exit();
+}
+
+// Guardamos el nombre en una variable local
+$usuario = $_SESSION['nombre_veterinario'];
 ?>
 
 
@@ -9,85 +19,20 @@ include '../services/database.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #fff8f0;
-            margin: 0;
-            padding: 20px;
-        }
-
-        h2 {
-            color: #d35400;
-            text-align: center;
-        }
-
-        .boton-anadir {
-            display: inline-block;
-            margin-bottom: 15px;
-            padding: 10px 20px;
-            background-color: #e67e22;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: bold;
-        }
-
-        .boton-anadir:hover {
-            background-color: #ca6f1e;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: #fff;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        th, td {
-            padding: 12px 15px;
-            text-align: center;
-            border-bottom: 1px solid #f2f2f2;
-        }
-
-        th {
-            background-color: #ffa559;
-            color: white;
-        }
-
-        tr:hover {
-            background-color: #f9e1d6;
-        }
-
-        td a {
-            text-decoration: none;
-            padding: 6px 12px;
-            border-radius: 5px;
-            margin: 0 2px;
-            color: white;
-        }
-
-        .editar {
-            background-color: #27ae60;
-        }
-
-        .editar:hover {
-            background-color: #1e8449;
-        }
-
-        .borrar {
-            background-color: #c0392b;
-        }
-
-        .borrar:hover {
-            background-color: #922b21;
-        }
-    </style>    
+    <link rel="stylesheet" href="../css/styles.css">
+    <title>Propietario</title>
+    
 </head>
 <body>
+
+<nav>
+    <a href="../index.php">Inicio</a>
+    <a href="../views/propietario.php">Propietarios</a>
+    <a href="../views/mascota.php">Mascotas</a>
+    <a href="../views/mostrar_medicamento.php">Medicamentos</a>
+    <a href="../proces/logout.php" class="cerrar">Cerrar sesión</a>
+</nav>
+
     <h2>Listado de propietarios</h2>
     <a href='../forms/form_propietario.php' class='boton-anadir'>➕ Añadir propietario</a>
     <a href='../index.php' class='boton-anadir'>🏠 Volver a inicio</a>

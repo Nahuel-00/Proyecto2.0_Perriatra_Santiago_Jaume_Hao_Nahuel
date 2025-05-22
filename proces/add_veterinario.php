@@ -1,9 +1,17 @@
 <?php
 // Iniciar sesión
 session_start();
+include "../services/database.php";
+// Comprobamos si hay sesión iniciada
+if (!isset($_SESSION['nombre_veterinario'])) {
+    header("Location: ../views/login.php");
+    exit();
+}
+
+// Guardamos el nombre en una variable local
+$usuario = $_SESSION['nombre_veterinario'];
 
 // Conexión BBDD
-include "../services/database.php";
 
 // Verificar conexión
 if (!$conn) {
@@ -17,7 +25,8 @@ $apellido1 = trim($_POST['apellido_primario_veterinario']);
 $apellido2 = trim($_POST['apellido_secundario_veterinario']);
 $telefono = trim($_POST['telefono']);
 $email = trim($_POST['email']);
-$fecha = $_POST['fecha_contratacion']; 
+$fecha = $_POST['fecha_contratacion'];
+$sueldo = $_POST['sueldo'];
 $activo = $_POST['activo'];
 $password = trim($_POST['passwordRegister']);
 $confirm_password = trim($_POST['confirm_password']);
@@ -32,7 +41,7 @@ if ($password !== $confirm_password) {
 $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
 // Validacion campos
-if (empty($dni) || empty($nombre) || empty($apellido1) || empty($apellido2) || empty($telefono) || empty($email) || empty($fecha) || $activo === "") {
+if (empty($dni) || empty($nombre) || empty($apellido1) || empty($apellido2) || empty($telefono) || empty($email) || empty($fecha) || empty($sueldo) || $activo === "") {
     echo "Todos los campos son obligatorios.";
     exit;
 }
@@ -46,8 +55,8 @@ if (mysqli_num_rows($result) > 0) {
 }
 
 // Insertar en la base de datos
-$sql = "INSERT INTO tbl_veterinario (dni_veterinario, nombre_veterinario, apellido_primario_veterinario, apellido_secundario_veterinario, telefono, email, fecha_contratacion, activo, password) 
-VALUES ('$dni', '$nombre', '$apellido1', '$apellido2', '$telefono', '$email', '$fecha', $activo, '$password_hash')";
+$sql = "INSERT INTO tbl_veterinario (dni_veterinario, nombre_veterinario, apellido_primario_veterinario, apellido_secundario_veterinario, telefono, email, fecha_contratacion, sueldo, activo, password) 
+VALUES ('$dni', '$nombre', '$apellido1', '$apellido2', '$telefono', '$email', '$fecha', '$sueldo', $activo, '$password_hash')";
 
 
 if (mysqli_query($conn, $sql)) {

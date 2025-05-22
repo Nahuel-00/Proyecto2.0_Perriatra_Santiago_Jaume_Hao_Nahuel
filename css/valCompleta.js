@@ -1,5 +1,5 @@
 
- // validacion login
+ // -- validacion login --
  function verifdnilogin() {
     let dni = document.getElementById("dni_login").value.trim();
     let errorDni = document.getElementById("errordni_login");
@@ -38,7 +38,7 @@
 
 
 
-// Validación Register
+// -- Validación Register --
 // DNI
 function verifDNIVeterinario() {
     let dni = document.getElementById("dni_veterinario").value.trim();
@@ -157,6 +157,41 @@ function verifFechaContratacion() {
         return true;
     }
 }
+
+function veriSueldo() {
+  let Sueldo = document.getElementById("sueldo").value;
+  let errorSueldo = document.getElementById("errorSueldo");
+
+  if (Sueldo === "") {
+    errorSueldo.textContent = "El campo no puede estar vacío";
+    return false;
+  }else if(Sueldo <= 0) {
+    errorSueldo.textContent = "El sueldo debe ser mayor que cero.";
+    return false;
+  }else if(/\s/.test(Sueldo)) {
+    errorSueldo.textContent = "El campo no puede contener espacios";
+    return false;
+  }else{
+    errorSueldo.textContent = "";
+    return true;
+  }
+}
+
+
+function veriActivo(){
+    let activo= document.getElementById("activo").value;
+    let errorActivo= document.getElementById("errorActivo");
+
+    if (activo === "") {
+      errorActivo.textContent = "Por favor, selecciona un sexo válido.";
+      return false;
+    } else {
+      errorActivo.textContent = "";
+      return true;
+    }
+}
+
+
 function verifContraRegister(){
     let contra1= document.getElementById("passwordRegister").value;
     let errorContra= document.getElementById("errorContraRegister");
@@ -202,7 +237,7 @@ function verifConfirmContraRegister(){
 
 
 
-// validacion propietario
+// -- validacion propietario --
 
 function verifDNI() {
     let dni = document.getElementById("dni_propietario").value.trim();
@@ -345,7 +380,7 @@ function veriDirepr(){
 
 
 
-// Validación Mascota
+// -- Validación Mascota --
 function verifChip(){
     let chip = document.getElementById("chip").value;
     let errorChip = document.getElementById("errorChip");
@@ -501,7 +536,7 @@ function veriDnive() {
 
 
 
-// Validacion editar Popietario
+// -- Validacion editar Popietario --
 function veriNompre(){
     let usuario= document.getElementById("nombrePropietarioMod").value;
     let errorUsuario= document.getElementById("errorUsuarioPropietarioMod");
@@ -625,10 +660,12 @@ function verifModDireccionPropietario(){
 
 
 
-// Validacion editar Mascota
-function verifNombreMascotaMod(){
-    let usuario= document.getElementById("nombreMascotaMod").value;
-    let errorUsuario= document.getElementById("errorUsuarioMascotaMod");
+// -- Validacion editar Mascota --
+
+
+function veriNomMasEdi(){
+    let usuario= document.getElementById("nombreMascotaEdi").value;
+    let errorUsuario= document.getElementById("errorMasEdi");
 
     if(usuario==null || usuario==""){
         errorUsuario.textContent= "El campo no puede estar vacío";
@@ -645,24 +682,24 @@ function verifNombreMascotaMod(){
     }
 }
 
-function verifSexoMod(){
-    let sexo= document.getElementById("sexoMod").value;
-    let errorSexo= document.getElementById("errorSexoMod");
+function veriSexoMasEdi(){
+    let sexo= document.getElementById("sexoMasEdi").value;
+    let errorSexo= document.getElementById("errorSexoEdi");
 
-    if(sexo === "") {
+    if (sexo === "") {
       errorSexo.textContent = "Por favor, selecciona un sexo válido.";
       return false;
-    }else{
+    } else {
       errorSexo.textContent = "";
       return true;
     }
 }
 
-function verifFechaMod() {
-  let fecha = document.getElementById("fecha_nacimientoMod").value;
-  let errorFecha = document.getElementById("errorFechaMascotaMod");
+function verifFechaEdi() {
+  let fecha = document.getElementById("fechaEdi").value;
+  let errorFecha = document.getElementById("errorFechaedi");
 
-  if(fecha === "") {
+  if (fecha === "") {
     errorFecha.textContent = "Por favor selecciona una fecha.";
     return false;
   }
@@ -670,7 +707,7 @@ function verifFechaMod() {
   let fechaIngresada = new Date(fecha);
   let hoy = new Date();
 
-  if(fechaIngresada > hoy) {
+  if (fechaIngresada > hoy) {
     errorFecha.textContent = "La fecha no puede ser posterior a hoy.";
     return false;
   }else{
@@ -679,9 +716,9 @@ function verifFechaMod() {
   }
 }
 
-function verifPesoMod() {
-  let peso = document.getElementById("pesoMod").value;
-  let errorPeso = document.getElementById("errorPesoMod");
+function verifPesoEdi() {
+  let peso = document.getElementById("pesoEdi").value;
+  let errorPeso = document.getElementById("errorPesoEdi");
 
   if (peso === "") {
     errorPeso.textContent = "El campo no puede estar vacío";
@@ -698,11 +735,12 @@ function verifPesoMod() {
   }
 }
 
-function verifVacunadoMod() {
-  let vacunado = document.getElementById("vacunadoMod").value;
-  let errorVacunado = document.getElementById("errorVacunadoMod");
 
-  if(vacunado === "") {
+function verifVacunadoEdi() {
+  let vacunado = document.getElementById("vacunadoEdi").value;
+  let errorVacunado = document.getElementById("errorVacunadoEdi");
+
+  if (vacunado === "") {
     errorVacunado.textContent = "Por favor, indica si está vacunado.";
     return false;
   }else{
@@ -711,23 +749,24 @@ function verifVacunadoMod() {
   }
 }
 
-function verifIdEspecieMod() {
-    let numEs = document.getElementById("especieMod").value;
-    let errorEs = document.getElementById("errorIdEspecieMod");
 
-    if (numEs === "") {
-      errorEs.textContent = "Por favor, selecciona un especie válido.";
+function verifEpecieEdi() {
+    let numEspecie = document.getElementById("especieEdi").value;
+    let errorE = document.getElementById("errorEspecieEdi");
+
+    if (numEspecie === "") {
+      errorE.textContent = "Por favor, selecciona un especie válido.";
       return false;
     } else {
-      errorEs.textContent = "";
+      errorE.textContent = "";
       return true;
     }
 }
 
 
-function veriPro() {
-    let dni = document.getElementById("dni_propietarioMod").value;
-    let error = document.getElementById("errorpro");
+function veriDniprEdi() {
+    let dni = document.getElementById("propietarioEdi").value;
+    let error = document.getElementById("errorDNIPropietarioEdi");
 
     if (dni === "") {
       error.textContent = "Por favor, selecciona un dni válido.";
@@ -740,19 +779,201 @@ function veriPro() {
 
 
 
-function VeriVete() {
-    let verive = document.getElementById("dni_veterinarioMod").value;
-    let errorveri = document.getElementById("errrmodmas");
+function veriDniveEdi() {
+    let dni = document.getElementById("dni_veterinarioEdi").value;
+    let error = document.getElementById("errorDNIVeterinarioEdi");
 
    
-    if (verive === "") {
-      errorveri.textContent = "Por favor, selecciona un dni válido.";
+    if (dni === "") {
+      error.textContent = "Por favor, selecciona un dni válido.";
       return false;
     } else {
-      errorveri.textContent = "";
+      error.textContent = "";
       return true;
     }
 
 }
 
+
+
+
+
+
+// -- Validacion editar Popietario --
+function veriNompre(){
+    let usuario= document.getElementById("nombrePropietarioMod").value;
+    let errorUsuario= document.getElementById("errorUsuarioPropietarioMod");
+
+    if(usuario==null || usuario==""){
+        errorUsuario.textContent= "El campo no puede estar vacío";
+        return false;
+    }else if(/\d/.test(usuario)){
+        errorUsuario.textContent="El campo no puede contener numeros";
+        return false;
+    }else if(usuario.length<3){
+        errorUsuario.textContent= "El campo no puede tener menos de 3 caracteres";
+        return false;
+    }else{
+        errorUsuario.textContent="";
+        return true;
+    }
+}
+
+function verifApellidoPropietarioMod1(){
+    let apellido1= document.getElementById("apellidoPropietarioMod1").value;
+    let errorApellido1= document.getElementById("errorApellidoPropietarioMod1");
+
+    if(apellido1==null || apellido1==""){
+        errorApellido1.textContent= "El campo no puede estar vacío";
+        return false;
+    }else if(/\d/.test(apellido1)){
+        errorApellido1.textContent="El campo no puede contener numeros";
+        return false;
+    }else if(apellido1.length<3){
+        errorApellido1.textContent= "El campo no puede tener menos de 3 caracteres";
+        return false;
+    }else{
+        errorApellido1.textContent="";
+        return true;
+    }
+}
+
+function verifApellidoPropietarioMod2(){
+    let apellido2= document.getElementById("apellidoPropietarioMod2").value;
+    let errorApellido2= document.getElementById("errorApellidoPropietarioMod2");
+
+    if(apellido2==null || apellido2==""){
+        errorApellido2.textContent= "El campo no puede estar vacío";
+        return false;
+    }else if(/\d/.test(apellido2)){
+        errorApellido2.textContent="El campo no puede contener numeros";
+        return false;
+    }else if(apellido2.length<3){
+        errorApellido2.textContent= "El campo no puede tener menos de 3 caracteres";
+        return false;
+    }else{
+        errorApellido2.textContent="";
+        return true;
+    }
+}
+
+function verifTelefonoPropietario(){
+    let telefono= document.getElementById("telefonoMod").value;
+    let errorTelefono= document.getElementById("errorTelefonoMod");
+
+    if(telefono==null || telefono==""){
+        errorTelefono.textContent= "El campo no puede estar vacío";
+        return false;
+    }else if(!(/^\d{8}$/.test(telefono))){
+        errorTelefono.textContent= "El formato de teléfono no es válido";
+        return false;
+    }else if(/\s/.test(telefono)) {
+        errorTelefono.textContent = "El campo no puede contener espacios";
+        return false;
+    }else{
+        errorTelefono.textContent="";
+        return true;
+    }
+}
+
+function verifModEmailPropietario(){
+    let email= document.getElementById("correoPropietarioMod").value;
+    let errorEmail= document.getElementById("errorEmailPropietarioMod");
+
+    if(email==null || email==""){
+        errorEmail.textContent= "El campo no puede estar vacío";
+        return false;
+    }else if(!(/^[\w.-]+@[\w.-]+\.\w{2,10}$/.test(email))){
+        errorEmail.textContent= "El formato de email no es válido";
+        return false;
+    }else if(/\s/.test(email)) {
+        errorEmail.textContent = "El campo no puede contener espacios";
+        return false;
+    }else{
+        errorEmail.textContent="";
+        return true;
+    }
+}
+
+function verifModDireccionPropietario(){
+    let direccion= document.getElementById("direccionMod").value;
+    let errorDireccion= document.getElementById("errorDireccionMod");
+
+    if(direccion==null || direccion==""){
+        errorDireccion.textContent= "El campo no puede estar vacío";
+        return false;
+    }else if(direccion.length<3){
+        errorDireccion.textContent= "El campo no puede tener menos de 3 caracteres";
+        return false;
+    }else{
+        errorDireccion.textContent="";
+        return true;
+    }
+}
+
+
+
+
+
+
+// -- Validacion de agregar medicamento --
+
+function veriNomMedi() {
+    let valor = document.getElementById('nombre').value.trim();
+    let error = document.getElementById('errorNomMedi');
+    if (valor === "") {
+        error.textContent = "Este campo es obligatorio.";
+        return false;
+    }
+    error.textContent = "";
+    return true;
+}
+
+
+function veriDesMedi() {
+    let valor = document.getElementById('descripcion').value.trim();
+    let error = document.getElementById('errorDesMedi');
+    if (valor === "") {
+        error.textContent = "Este campo es obligatorio.";
+        return false;
+    }
+    error.textContent = "";
+    return true;
+}
+
+
+function veriDosisMedi() {
+    let valor = document.getElementById('dosis').value.trim();
+    let error = document.getElementById('errorDosis');
+    if (valor === "") {
+        error.textContent = "Este campo es obligatorio.";
+        return false;
+    }
+    error.textContent = "";
+    return true;
+}
+
+
+function veriEspecieMedi() {
+    let valor = document.getElementById('id_especie').value;
+    let error = document.getElementById('errorEspeMedi');
+    if (valor === "") {
+        error.textContent = "Selecciona una opción.";
+        return false;
+    }
+    error.textContent = "";
+    return true;
+}
+
+
+function veriImaMedi() {
+    let archivo = document.getElementById('imagen').files.length;
+    let error = document.getElementById('errorImgMedi');
+    if (archivo === 0) {
+        error.textContent = "Debes subir una imagen.";
+        return false;
+    }
+    error.textContent = "";
+    return true;
+}
 

@@ -1,5 +1,17 @@
 <?php
-// Conexión a la base de datos
+session_start();
+
+// Comprobamos si hay sesión iniciada
+if (!isset($_SESSION['nombre_veterinario'])) {
+    header("Location: ../views/login.php");
+    exit();
+}
+
+// Guardamos el nombre en una variable local
+$usuario = $_SESSION['nombre_veterinario'];
+
+$conexion = mysqli_connect("localhost", "root", "", "db_perriatra");
+
 $conn = mysqli_connect("localhost", "root", "", "db_perriatra");
 if (!$conn) {
     die("Error de conexión: " . mysqli_connect_error());
@@ -42,94 +54,39 @@ $especies = mysqli_query($conn, "SELECT id_especie, nombre_especie FROM tbl_espe
     <meta charset="UTF-8">
     <title>Solicitar Medicamento</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #fff8f0;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: #ff7f00;
-            color: white;
-            padding: 15px;
-            text-align: center;
-        }
-        .container {
-            width: 80%;
-            margin: 30px auto;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-        }
-        h1 {
-            color: #ff7f00;
-            text-align: center;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-        label {
-            margin-top: 15px;
-            font-weight: bold;
-        }
-        input, textarea, select {
-            padding: 10px;
-            margin-top: 5px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            font-size: 16px;
-        }
-        input[type="submit"] {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            margin-top: 20px;
-            cursor: pointer;
-        }
-        input[type="submit"]:hover {
-            background-color: #218838;
-        }
-        a.volver {
-            display: inline-block;
-            margin-top: 20px;
-            color: #ff7f00;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        a.volver:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <script src="../css/valCompleta.js" defer></script>
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
     <header>
-        <h1><i class="fas fa-pills"></i> Solicitar Medicamento al Proveedor</h1>
+        <h2><i class="fas fa-pills colon"></i> Solicitar Medicamento al Proveedor</h2>
     </header>
     <div class="container">
         <form method="POST" enctype="multipart/form-data">
             <label for="nombre">Nombre del medicamento:</label>
-            <input type="text" name="nombre" id="nombre" required>
+            <input type="text" name="nombre" id="nombre" onblur="veriNomMedi()" required>
+            <p class="error" id="errorNomMedi"></p>
 
             <label for="descripcion">Descripción:</label>
-            <textarea name="descripcion" id="descripcion" rows="4" required></textarea>
+            <textarea name="descripcion" id="descripcion" rows="4" onblur="veriDesMedi()" required></textarea>
+            <p class="error" id="errorDesMedi"></p>
 
             <label for="dosis">Dosis:</label>
-            <input type="text" name="dosis" id="dosis" required>
+            <input type="text" name="dosis" id="dosis" onblur="veriDosisMedi()" required>
+            <p class="error" id="errorDosis"></p>
 
             <label for="id_especie">Especie:</label>
-            <select name="id_especie" id="id_especie" required>
+            <select name="id_especie" id="id_especie" onblur="veriEspecieMedi()" required>
                 <option value="">Seleccionar especie</option>
                 <?php while ($row = mysqli_fetch_assoc($especies)) { ?>
                     <option value="<?= $row['id_especie'] ?>"><?= ucfirst($row['nombre_especie']) ?></option>
                 <?php } ?>
             </select>
+            <p class="error" id="errorEspeMedi"></p>
 
             <label for="imagen">Imagen del medicamento:</label>
-            <input type="file" name="imagen" id="imagen" accept="image/*" required>
+            <input type="file" name="imagen" id="imagen" accept="image/*" onblur="veriImaMedi()" required>
+            <p class="error" id="errorImgMedi"></p>
 
             <input type="submit" value="Añadir Medicamento">
         </form>

@@ -1,6 +1,15 @@
 <?php
-include '../services/database.php';
 session_start();
+include '../services/database.php';
+
+// Comprobamos si hay sesión iniciada
+if (!isset($_SESSION['nombre_veterinario'])) {
+    header("Location: ../views/login.php");
+    exit();
+}
+
+// Guardamos el nombre en una variable local
+$usuario = $_SESSION['nombre_veterinario'];
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $chip = trim($_POST['chip']);
@@ -45,9 +54,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     // Asociar parámetros
-    mysqli_stmt_bind_param($stmt, "ssssdiiis", 
-    $chip, $nombre, $sexo, $fecha_nacimiento, $peso, $vacunado, $id_especie, $dni_propietario, $dni_veterinario
-    );
+    mysqli_stmt_bind_param($stmt, "ssssdisss", 
+    $chip, $nombre, $sexo, $fecha_nacimiento, $peso, $vacunado, $id_especie, $dni_propietario, $dni_veterinario);
+
 
 
     // Ejecutar

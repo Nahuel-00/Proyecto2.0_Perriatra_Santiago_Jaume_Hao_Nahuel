@@ -24,6 +24,7 @@ CREATE TABLE tbl_veterinario (
     email VARCHAR(100) NOT NULL,
     fecha_contratacion DATE NOT NULL,
     activo BOOLEAN NOT NULL,
+    sueldo DECIMAL (6,2) NOT NULL,
     password VARCHAR(255) NOT NULL
 );
 
