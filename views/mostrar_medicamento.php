@@ -80,6 +80,16 @@ $resultado = mysqli_query($conn, $query);
         .solicitar-btn:hover {
             background-color: #218838;
         }
+        .boton-anadir {
+            display: inline-block;
+            margin: 10px 5px;
+            padding: 10px 20px;
+            background-color: #e67e22;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -87,11 +97,12 @@ $resultado = mysqli_query($conn, $query);
 <header>
     <h1><i class="fas fa-pills"></i> Listado de Medicamentos</h1>
 </header>
-
+<br>
 <div class="container">
-    <a href="../forms/form_agregar_medicamento.php" class="solicitar-btn">
-        <i class="fas fa-plus-circle"></i> Solicitar Medicamento al Proveedor
-    </a>
+    <a href='../forms/form_agregar_medicamento.php' class='boton-anadir'>➕ Solicitar Medicamento al Proveedor</a>
+    <a href='../index.php' class='boton-anadir'>🏠 Volver a inicio</a>
+
+    
 
     <div class="grid">
         <?php while ($med = mysqli_fetch_assoc($resultado)) : ?>

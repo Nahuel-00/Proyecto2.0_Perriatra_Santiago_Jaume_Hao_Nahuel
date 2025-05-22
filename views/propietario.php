@@ -88,8 +88,9 @@ include '../services/database.php';
     </style>    
 </head>
 <body>
-    <a href="../forms/form_propietario.php" class="boton-anadir">Añadir Propietario</a>
-    <a href="../index.php" class="boton-anadir">Volver a inicio</a>
+    <h2>Listado de propietarios</h2>
+    <a href='../forms/form_propietario.php' class='boton-anadir'>➕ Añadir propietario</a>
+    <a href='../index.php' class='boton-anadir'>🏠 Volver a inicio</a>
 
 <table>
     <tr>

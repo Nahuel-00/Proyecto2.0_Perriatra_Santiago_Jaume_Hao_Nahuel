@@ -45,8 +45,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     // Asociar parámetros
-    mysqli_stmt_bind_param($stmt, "sssdiiiss", 
-        $nombre, $sexo, $fecha_nacimiento, $peso, $vacunado, $id_especie, $dni_propietario, $dni_veterinario, $chip
+    mysqli_stmt_bind_param($stmt, "ssssdiiis", 
+    $chip, $nombre, $sexo, $fecha_nacimiento, $peso, $vacunado, $id_especie, $dni_propietario, $dni_veterinario
     );
 
 

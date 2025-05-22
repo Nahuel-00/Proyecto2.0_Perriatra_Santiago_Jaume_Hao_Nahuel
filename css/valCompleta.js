@@ -660,7 +660,7 @@ function verifSexoMod(){
 
 function verifFechaMod() {
   let fecha = document.getElementById("fecha_nacimientoMod").value;
-  let errorFecha = document.getElementById("errorFechaMod");
+  let errorFecha = document.getElementById("errorFechaMascotaMod");
 
   if(fecha === "") {
     errorFecha.textContent = "Por favor selecciona una fecha.";
@@ -712,35 +712,47 @@ function verifVacunadoMod() {
 }
 
 function verifIdEspecieMod() {
-    let numeroIdEspecie= document.getElementById("id_especieMod").value;
-    let errorIdEspecie= document.getElementById("errorIdEspecieMod");
+    let numEs = document.getElementById("especieMod").value;
+    let errorEs = document.getElementById("errorIdEspecieMod");
 
-    if(numeroIdEspecie==null || numeroIdEspecie==""){
-        errorIdEspecie.textContent= "El campo no puede estar vacío";
-        return false;
-    }else if(numeroIdEspecie!=isNaN){
-        errorIdEspecie.textContent="El campo solo puede contener numeros";
-        return false;
-    }else{
-        errorIdEspecie.textContent = "";
-        return true;
-  }
+    if (numEs === "") {
+      errorEs.textContent = "Por favor, selecciona un especie válido.";
+      return false;
+    } else {
+      errorEs.textContent = "";
+      return true;
+    }
 }
 
-function verifIdPropietarioMod() {
-    let numeroIdPropietario= document.getElementById("id_propietarioMod").value;
-    let errorIdPropietario= document.getElementById("errorIdPropietarioMod");
 
-    if(numeroIdPropietario==null || numeroIdPropietario==""){
-        errorIdPropietario.textContent= "El campo no puede estar vacío";
-        return false;
-    }else if(numeroIdPropietario!=isNaN){
-        errorIdPropietario.textContent="El campo solo puede contener numeros";
-        return false;
-    }else{
-        errorIdPropietario.textContent = "";
-        return true;
-  }
+function veriPro() {
+    let dni = document.getElementById("dni_propietarioMod").value;
+    let error = document.getElementById("errorpro");
+
+    if (dni === "") {
+      error.textContent = "Por favor, selecciona un dni válido.";
+      return false;
+    } else {
+      error.textContent = "";
+      return true;
+    }
 }
 
-// Validacion de formulario
+
+
+function VeriVete() {
+    let verive = document.getElementById("dni_veterinarioMod").value;
+    let errorveri = document.getElementById("errrmodmas");
+
+   
+    if (verive === "") {
+      errorveri.textContent = "Por favor, selecciona un dni válido.";
+      return false;
+    } else {
+      errorveri.textContent = "";
+      return true;
+    }
+
+}
+
+
