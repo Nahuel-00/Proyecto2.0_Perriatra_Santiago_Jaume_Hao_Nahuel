@@ -1,111 +1,171 @@
 <?php
-include './services/database.php';
+$conexion = mysqli_connect("localhost", "root", "", "db_perriatra");
 
-// Construir condiciones de filtrado
-$condiciones = [];
-if (isset($_GET['nombre']) && $_GET['nombre'] !== '') {
-    $nombre = $_GET['nombre'];
-    $condiciones[] = "nombre LIKE '%$nombre%'";
-}
-if (isset($_GET['dni']) && $_GET['dni'] !== '') {
-    $dni = $_GET['dni'];
-    $condiciones[] = "dni_propietario = '$dni'";
+if (!$conexion) {
+    die("Error de conexión: " . mysqli_connect_error());
 }
 
-$where = '';
-if (count($condiciones) > 0) {
-    $where = 'WHERE ' . implode(' AND ', $condiciones);
-}
+// session_start();
 
-$query = "SELECT 
-    id_propietario AS id, 
-    dni_propietario AS dni, 
-    nombre, 
-    apellido_primario AS apellido1, 
-    apellido_secundario AS apellido2, 
-    direccion, 
-    telefono, 
-    email, 
-    fecha_registro 
-    FROM tbl_propietario $where";
+// if (!isset($_SESSION['usuario'])) {
+//     header("Location: ./views/login.html");
+//     exit();
+// }
+// $usuario = $_SESSION['usuario'];
 
-$result = mysqli_query($conn, $query);
 
-if (!$result) {
-    die("Error en la consulta SQL: " . mysqli_error($conn));
-}
+$sql = "SELECT 
+            p.dni_propietario, 
+            p.nombre_propietario, 
+            p.apellido_primario_propietario, 
+            p.apellido_secundario_propietario,
+            a.chip, 
+            a.nombre AS nombre_mascota, 
+            a.sexo, 
+            a.fecha_nacimiento, 
+            a.peso, 
+            a.vacunado
+        FROM tbl_propietario p
+        LEFT JOIN tbl_animal a ON p.dni_propietario = a.dni_propietario
+        ORDER BY p.apellido_primario_propietario, p.apellido_secundario_propietario, p.nombre_propietario";
+
+$resultado = mysqli_query($conexion, $sql);
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página principal</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./css/styles.css">
-    <link rel="icon" href="./img/paw-solid.svg">
+    <title>Veterinaria - Propietarios y Mascotas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff8f0;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #ff7f00;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        nav {
+            background-color: #ffb366;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .container {
+            width: 90%;
+            margin: 20px auto;
+        }
+        h1 {
+            color: #ff7f00;
+        }
+        .bienvenida {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        .boton-anadir {
+            background-color: #28a745;
+            color: white;
+            padding: 8px 12px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #ffb366;
+            color: white;
+        }
+        tr:hover {
+            background-color: #ffe0cc;
+        }
+        .acciones a {
+            margin-right: 10px;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            color: white;
+        }
+        .editar {
+            background-color: #007bff;
+        }
+        .borrar {
+            background-color: #dc3545;
+        }
+    </style>
 </head>
 <body>
+
 <header>
-<nav class="navbar navbar-expand-lg">
-    <div id="nav_inicio">
-        <div id="inicio_1">
-            <a href="index.php" class="btn btn-dark">Inicio</a>
-        </div>
-        <div id="inicio_2">
-            <a href="index.php" class="btn btn-dark">PERRITOS</a>
-        </div>
-    </div>
-</nav>
+    <h1>Clínica Veterinaria PerriAtra</h1>
 </header>
 
-<section class="container mt-4">
-    <h2>Filtrar propietarios</h2>
-    <form method="get" class="mb-4">
-        <input type="text" name="dni" placeholder="DNI" value="<?php echo isset($_GET['dni']) ? $_GET['dni'] : ''; ?>">
-        <input type="text" name="nombre" placeholder="Nombre" value="<?php echo isset($_GET['nombre']) ? $_GET['nombre'] : ''; ?>">
-        <button type="submit" class="btn btn-primary btn-sm">Filtrar</button>
-        <a href="index.php" class="btn btn-secondary btn-sm">Volver atrás</a>
-    </form>
+<nav>
+    <a href="./views/propietario.php">Propietarios</a>
+    <a href="./views/mascota.php">Mascotas</a>
+    <a href="./views/mostrar_medicamento.php">Medicamentos</a>
+    <a href="./proces/logout.php">Cerrar sesión</a>
+</nav>
 
-    <h2>Propietarios de mascotas</h2>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>DNI</th>
-                <th>Nombre</th>
-                <th>Primer Apellido</th>
-                <th>Segundo Apellido</th>
-                <th>Dirección</th>
-                <th>Teléfono</th>
-                <th>Email</th>
-                <th>Fecha de Registro</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-        <?php while ($row = mysqli_fetch_assoc($result)): ?>
-            <tr>
-                <td><?php echo $row['dni']; ?></td>
-                <td><?php echo $row['nombre']; ?></td>
-                <td><?php echo $row['apellido1']; ?></td>
-                <td><?php echo $row['apellido2']; ?></td>
-                <td><?php echo $row['direccion']; ?></td>
-                <td><?php echo $row['telefono']; ?></td>
-                <td><?php echo $row['email']; ?></td>
-                <td><?php echo date('d/m/Y', strtotime($row['fecha_registro'])); ?></td>
-                <td>
-                <a href="./proces/modificar.php?id=<?php echo $row['id']; ?>" class="btn btn-primary btn-sm">Modificar</a>
-                <a href="./proces/delete.php?id=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm">Eliminar</a>
-                <a href="contactos.php?id=<?php echo $row['id']; ?>" class="btn btn-info btn-sm">Contactos</a>
-                </td>
-            </tr>
-        <?php endwhile; ?>
-        </tbody>
-    </table>
-</section>
+<div class="container">
+ 
+    <table>
+        <tr>
+            <th>DNI Propietario</th>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Chip Mascota</th>
+            <th>Nombre Mascota</th>
+            <th>Sexo</th>
+            <th>Fecha Nacimiento</th>
+            <th>Peso (kg)</th>
+            <th>Vacunado</th>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+        </tr>
+        <?php
+        while ($fila = mysqli_fetch_assoc($resultado)) {
+            echo "<tr>";
+            echo "<td>" . $fila["dni_propietario"] . "</td>";
+            echo "<td>" . $fila["nombre_propietario"] . "</td>";
+            echo "<td>" . $fila["apellido_primario_propietario"] . " " . $fila["apellido_secundario_propietario"] . "</td>";
+            echo "<td>" . ($fila["chip"] ?? "—") . "</td>";
+            echo "<td>" . ($fila["nombre_mascota"] ?? "—") . "</td>";
+            echo "<td>" . ($fila["sexo"] ?? "—") . "</td>";
+            echo "<td>" . ($fila["fecha_nacimiento"] ?? "—") . "</td>";
+            echo "<td>" . ($fila["peso"] ?? "—") . "</td>";
+            echo "<td>" . (isset($fila["vacunado"]) ? ($fila["vacunado"] ? "Sí" : "No") : "—") . "</td>";
+            echo "<td class='acciones'>";
+            echo "</td>";
+            echo "</tr>";
+        }
+        ?>
+        
+</div>
+
 </body>
 </html>
+
+<?php
+mysqli_close($conexion);
+?>

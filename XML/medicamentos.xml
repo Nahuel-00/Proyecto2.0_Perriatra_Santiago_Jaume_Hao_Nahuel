@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<medicamentos>
+    <medicamento>
+        <nombre>Amoxicilina</nombre>
+        <descripcion>Antibiótico de amplio espectro utilizado para tratar infecciones bacterianas.</descripcion>
+        <imagen>amoxicilina.png</imagen>
+        <dosis>10 mg/kg cada 12 horas</dosis>
+        <id_especie>3</id_especie> <!-- 1 = mamífero -->
+    </medicamento>
+    <medicamento>
+        <nombre>Ivermectina</nombre>
+        <descripcion>Antiparasitario eficaz contra parásitos internos y externos.</descripcion>
+        <imagen>ivermectina.png</imagen>
+        <dosis>200 mcg/kg cada 24 horas</dosis>
+        <id_especie>2</id_especie> <!-- 2 = ave -->
+    </medicamento>
+    <medicamento>
+        <nombre>Enrofloxaciina</nombre>
+        <descripcion>Antibiótico fluoroquinolona para infecciones respiratorias y urinarias.</descripcion>
+        <imagen>enrofloxacina.png</imagen>
+        <dosis>5 mg/kg cada 24 horas</dosis>
+        <id_especie>1</id_especie>
+    </medicamento>
+    <medicamento>
+        <nombre>paracetamol</nombre>
+        <descripcion>ejemplo.</descripcion>
+        <imagen>paracetamol.png</imagen>
+        <dosis>5 mg/kg cada 24 horas</dosis>
+        <id_especie>1</id_especie>
+    </medicamento>
+</medicamentos>
