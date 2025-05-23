@@ -2,11 +2,6 @@
 // Iniciar sesión
 session_start();
 include "../services/database.php";
-// Comprobamos si hay sesión iniciada
-if (!isset($_SESSION['nombre_veterinario'])) {
-    header("Location: ../views/login.php");
-    exit();
-}
 
 // Guardamos el nombre en una variable local
 $usuario = $_SESSION['nombre_veterinario'];
@@ -62,7 +57,7 @@ VALUES ('$dni', '$nombre', '$apellido1', '$apellido2', '$telefono', '$email', '$
 if (mysqli_query($conn, $sql)) {
     // Guardar la sesión e iniciar sesión automáticamente
     $_SESSION['dni_veterinario'] = $dni;
-    $_SESSION['nombreVeterinario'] = $nombre;
+    $_SESSION['nombre_veterinario'] = $nombre;
 
     echo "Registro exitoso. Redirigiendo...";
     header("Location: ../index.php");

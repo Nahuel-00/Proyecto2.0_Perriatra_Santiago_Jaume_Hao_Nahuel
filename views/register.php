@@ -66,14 +66,6 @@
         
         <!-- Enlace para ir al formulario de inicio de sesión -->
         <p class="link">¿Ya tienes cuenta? <a href="../views/login.php">Inicia sesión aquí</a></p>
-        <?php
-        // Una vez registrado, redirtigir al inidce con la sesion iniciada
-        session_start();
-        if (isset($_SESSION['dni_veterinario'])) {
-          header("Location: ../index.php");
-          exit();
-        }
-        ?>
       </form>
     </div>
   </div>
